@@ -1,0 +1,32 @@
+body{
+    background-color: white;
+}
+
+.jumbotron{
+    text-align: center;
+    background-color: #7F462C;
+    color:white;
+    width:90%;
+    margin: auto;
+    border-radius: 2px;
+}
+.lead{
+    text-align: center;
+}
+
+form{
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #337AB7;
+    border-radius: 3px;
+    width: 90%;
+}
+.form-header{
+    padding: 5px;
+    background-color: #337AB7;
+    margin: auto;
+    width:90%;
+    border-radius: 3px;
+    color:white;
+
+}

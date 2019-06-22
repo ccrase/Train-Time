@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Title</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- stylesheet-->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!--Jumbtron-->
+
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Anytime is Train Time</h1>
+      <p class="lead">Choo-Choo. Chee-Chee.</p>
+    </div>
+  </div>
+
+  <br>
+  <br>
+
+  <div class="form-header">Current Train Schedule</div>
+  <!--//list of trains-->
+  <form>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Train Name</th>
+          <th scope="col">Destination</th>
+          <th scope="col">Frequency (min)</th>
+          <th scope="col">Next Arrival</th>
+          <th scope="col">Minutes Away</th>
+        </tr>
+      </thead>
+      <tbody class="schedule-data">
+      </tbody>
+    </table>
+  </form>
+
+  <br>
+  <br>
+  <div class="form-header">Add Train</div>
+  <!-- //forms -->
+  <form>
+    <div class="form-group">
+      <label for="train-name">Train Name</label>
+      <input type="text" class="form-control" id="train-name" placeholder="" value="">
+    </div>
+    <div class="form-group">
+      <label for="destination">Destination</label>
+      <input type="text" class="form-control" id="destination" placeholder="" value="">
+    </div>
+    <div class="form-group">
+      <label for="first-train">First Train Time (HH:mm -military time)</label>
+      <input type="text" class="form-control" id="first-train" placeholder="" value="">
+      <div class="form-group">
+        <label for="frequency">Frequency (min)</label>
+        <input type="text" class="form-control" id="frequency" placeholder="" value="">
+        <br>
+
+        <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+  </form>
+  </div>
+  </div>
+
+  <br>
+  <br>
+  <!-- Optional JavaScript -->
+  <!-- <script src="/javascript.js"></script> -->
+  <!-- The core Firebase JS SDK -->
+  <script src="https://www.gstatic.com/firebasejs/6.2.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.2/firebase-database.js"></script>
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
+  <script>
+    $(document).ready(function () {
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCu3TmOx32P7nj2P1lW-u9mTiKgrHKCvkA",
+        authDomain: "test-project-21c2a.firebaseapp.com",
+        databaseURL: "https://test-project-21c2a.firebaseio.com",
+        projectId: "test-project-21c2a",
+        storageBucket: "test-project-21c2a.appspot.com",
+        messagingSenderId: "332271622227",
+        appId: "1:332271622227:web:6c1b5cbb4874911c"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const database= firebase.database();
+
+      database.ref().on("value", function (snapshot) {
+        $(".schedule-data").empty();
+        snapshot.forEach(function (childSnapshot) {
+          var childData = childSnapshot.val();
+          var tName = childData.name;
+          var tDestination = childData.destination;
+          var tFrequency = childData.frequency;
+          var tNextArrival =0;
+          var tMinutesAway =0;
+
+          $(".schedule-data").append("<tr><td>" + tName +
+                                    "</td><td>" + tDestination +
+                                    "</td><td>" + tFrequency+ 
+                                    "</td><td>" + tNextArrival +
+                                    "</td><td>" + tMinutesAway +
+                                    "</td></tr>");
+
+        });
+       }, function (errorObject) {
+      console.log("The read failed: " + errorObject.code);
+      });
+
+
+
+    $("#submit").on("click", function (event) {
+      event.preventDefault();
+      var name = $("#train-name").val();
+      var destination = $("#destination").val();
+      var firstTrain = $("#first-train").val();
+      var frequency = $("#frequency").val();
+      console.log(name);
+      console.log(destination);
+      console.log(firstTrain);
+      console.log(frequency);
+      $(".form-control").val("");
+       //set the values in the database
+      database.ref().push({
+        name: name,
+        destination: destination,
+        firstTrain: firstTrain,
+        frequency: frequency,
+        dateAdded: firebase.database.ServerValue.TIMESTAMP
+      });
+      trainTimes();
+    });
+
+    //train calculations
+    function trainTimes() {
+    };
+  });
+
+  </script>
+</body>
+
+</html>
