@@ -4,7 +4,7 @@ body{
 
 .jumbotron{
     text-align: center;
-    background-color: #7F462C;
+    background-color: lightblue;
     color:white;
     width:90%;
     margin: auto;
@@ -12,6 +12,8 @@ body{
 }
 .lead{
     text-align: center;
+    font-size: 30px;
+    letter-spacing: 5px;
 }
 
 form{
@@ -29,4 +31,8 @@ form{
     border-radius: 3px;
     color:white;
 
+}
+img{
+    object-fit: contain;
+    width: 75%;
 }
