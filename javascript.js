@@ -1,4 +1,4 @@
-$(document).ready(function () {
+//$(document).ready(function () {
   // Your web app's Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyCu3TmOx32P7nj2P1lW-u9mTiKgrHKCvkA",
@@ -81,4 +81,4 @@ $(document).ready(function () {
     console.log("The read failed: " + errorObject.code);
   });
 
-});
+//});
